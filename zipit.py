@@ -7,10 +7,16 @@ import gzip
 import getopt
 
 # gzips a file or stream in parallel
-# takes maximum advantage of the CPU's available
+# takes maximum advantage of the CPU's available:
 #
-# cmd | ./zipit.py - >cmdout.gz
-# cmd > cmdout ; ./zipit.py cmdout # --> produces  cmdout.py
+# $ cmd > cmdout ; python zipit.py cmdout
+#
+# ( produces cmdout.gz ).
+#
+# In Bash, pipe stdin/stdout and use TMPDIR and verbose option:
+# 
+# $ chmod +x ./zipit.py
+# $ cmd | TMPDIR="/dev/shm" ./zipit.py -v - >cmdout.gz
 #
 # Lots of space is needed for temporary file chunks
 # during the gzip. These are stored and zipped in

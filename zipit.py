@@ -15,7 +15,7 @@ import getopt
 # Lots of space is needed for temporary file chunks
 # during the gzip. These are stored and zipped in
 # /tmp by default (or optionally, wherever TMPDIR points) 
-# but these are cleaned up unless -k is applied.
+# and are cleaned up unless -k is applied.
 
 cmprlvl = 4
 verbosity = 0

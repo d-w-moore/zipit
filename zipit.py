@@ -50,13 +50,17 @@ opt,arg = getopt.getopt(sys.argv[1:],'c:hkvd:q:')
 
 for key,val in opt:
     if   key == '-c': cmprlvl = int(val)
-    elif key == '-q': Qmax = int(val)
+    elif key == '-q': 
+        try:
+            Qmax = int(val)
+        except ValueError:
+            if val.lower()[:1] == 'm': Qmax = 99999999
     elif key == '-h': usage()
     elif key == '-d': digest = val
     elif key == '-k': keep=True
     elif key == '-v': verbosity=1
 
-Qmax = min( max( Qmax, 0 ), multiprocessing.cpu_count() )
+Qmax = min( max( Qmax, 1 ), multiprocessing.cpu_count() )
 pid = os.getpid()
 d = {}
 tmp_dir = os.getenv('TMPDIR','/tmp')

@@ -26,14 +26,26 @@ thr={}
 q=4
 verbose=False
 
-opt,arg=getopt.getopt(sys.argv[1:],'vq:')
+def usage():
+  print('''
+  Usage: {0} [Options...] {{compressed_file}} {{digest_file}}
+     or: {0} [Options...] {{compressed_file}} {{< digest_file}}
+  Options:
+           -h      print this help
+           -v      verbosely print successful md5 matches
+           -q N    use q CPU cores at a time
+  
+           '''.format(sys.argv[0],**globals()))
+  exit()
+
+opt,arg=getopt.getopt(sys.argv[1:],'vhq:')
 for k,v in opt:
+  if   k == '-h': usage()
   if   k == '-q': q = int(v)
   elif k == '-v': verbose=True
 
 if not arg[:1]:
-  print('Error: must supply name of a zipped file as argument 0',file=sys.stderr)
-  exit(1)
+  usage()
 
 offset=0
 idx={}

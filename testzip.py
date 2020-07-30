@@ -47,6 +47,7 @@ for k,v in opt:
 if not arg[:1]:
   usage()
 
+fn=''
 offset=0
 idx={}
 zin=open(arg[0],'rb')
@@ -63,7 +64,7 @@ for line in infil:
 
 n = 0
 for i in range(q):
-    if idx.has_key(i):
+    if i in idx:
       n = i
       thr[n] = c = Checker(zin.read(idx[n][1]))
       c[1].start()
@@ -81,13 +82,17 @@ while thr :
       results[i] = check
       if verbose: print('done: ',i,check,file=sys.stderr)
       del thr[i]
-    while len(thr) < q and idx.has_key(n):
+    while len(thr) < q and n in idx:
       thr[n] = c = Checker(zin.read(idx[n][1]))
       c[1].start()
       n += 1
 
-#print ('--results--')
-#pprint.pprint( results )
+success_code = 0 if not [i for i in results.values() if not i] \
+               else 2 
 
-#success if no results are False
-exit( 0 if not [i for i in results.values() if not i] else 2 )
+print("Integrity check {} on".format ("succeeded" if success_code == 0 else "failed"),
+       ("'{}'".format(fn) if fn else "stdin"),
+       file=sys.stderr
+)
+
+exit(success_code)

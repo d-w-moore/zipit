@@ -6,7 +6,10 @@ import sys, os
 import gzip
 import hashlib
 import getopt
-import Queue
+try:
+  from queue import Queue  # python 3
+except ImportError:
+  from Queue import Queue  # python 2
 
 # gzips a file or stream in parallel
 # takes maximum advantage of the CPU's available:
@@ -31,7 +34,7 @@ keep = False
 digest = ''
 
 Qmax = 6
-qu=Queue.Queue()
+qu=Queue()
 
 dig = {}
 

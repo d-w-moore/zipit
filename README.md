@@ -5,8 +5,8 @@ as quickly as possible leveraging the parallelism of your machine.
 
 They require only that python be installed, and they depend only on the 
 modules included as part of the Python standard library.  (Naturally this
-includes the zlib and gzip libraries - which may not be supported on the
-more minimal distributions by default).
+includes the zlib and gzip libraries - which may not be part of a default
+OS install for minimal or containerized distributions).
 
 ## zipit.py
 
@@ -20,8 +20,8 @@ Example uses:
 
    some_command | ./zipit - > out.gz    # => gzips from the stdin stream, onto stdout
 
-   docker export dcimg | \
-     ./zipit.py -d dcimg- >cimg.tgz    # => gzips from the stdin stream, onto stdout
+   docker export cimg | \
+     ./zipit.py -d cimg.dig - >cimg.tgz # => gzips from the stdin stream, onto stdout
 ```
 
 ## testzip.py

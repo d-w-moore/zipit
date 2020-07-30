@@ -13,22 +13,22 @@ OS install for minimal or containerized distributions).
 Example uses:
 
 ```
-   ./zipit -v large.tar                 # => creates large.tar.gz with the default parallelism 
-                                        #    (& verbosely informs of the piece-wise gzip tasks)
+ $ ./zipit -v large.tar    # => Creates large.tar.gz at default level of parallelism.
+                           #    (-v verbosely informs of the piece-wise gzip tasks)
 
-   ./zipit -qm large.tar                # => creates large.tar.gz using all available CPU's
+ $ ./zipit -qm large.tar   # => creates large.tar.gz using all available CPU's
 
-   some_command | ./zipit - > out.gz    # => gzips from the stdin stream, onto stdout
+ $ some_command | ./zipit - > out.gz    # => gzips from the stdin stream, onto stdout
 
-   docker export cimg | \
-     ./zipit.py -d cimg.dig - >cimg.tgz # => gzips from the stdin stream, onto stdout
+ $ docker export cimg | ./zipit.py \    # => export and compress the filesystem of
+      -d cimg.dig - >cimg.tgz           #    a docker container
 ```
 
 ## testzip.py
 
-Examples use (for context, see the final `zipit.py` example above):
+Example use (for context, see the final `zipit.py` example above):
 
 ```
-   ./testzip.py cimg.tgz cimg.dig      # => tests the gzipped file's integrity using a digest file
+ $ ./testzip.py cimg.tgz cimg.dig      # => tests the gzipped file's integrity using a digest file
                                        #    (returns 0 if the integrity is good)
 ```

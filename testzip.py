@@ -93,7 +93,7 @@ zin=open(arg[0],'rb')
 infil = sys.stdin
 if arg[1:]:
   fn = arg[1]
-  infil = open(fn)
+  if fn and (fn != '-'): infil = open(fn)
 
 for line in infil:
     n,dig,sz = line.split('\t')
@@ -147,8 +147,8 @@ while thr :
 success_code = 0 if not [i for i in results.values() if not i] \
                else 2
 
-print("Integrity check {} on".format ("succeeded" if success_code == 0 else "failed"),
-       ("'{}'".format(fn) if fn else "stdin"),
+print( "Integrity check {}".format ("succeeded" if success_code == 0 else "failed"),
+       "on '{}' using '{}'".format(arg[0],(fn if fn and (fn != '-') else "stdin")),
        file=sys.stderr
 )
 

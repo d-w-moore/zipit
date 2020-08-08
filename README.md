@@ -3,10 +3,8 @@
 This repo contains two scripts useful for gzipping and checking large files 
 as quickly as possible leveraging the parallelism of your machine.
 
-They require only that python be installed, and they depend only on the 
-modules included as part of the Python standard library.  (Naturally this
-includes the zlib and gzip libraries - which may not be part of a default
-OS install for minimal or containerized distributions).
+They require only that python be installed, and they depend only on modules
+included in the Python Standard Library -- particularly, of course, gzip.
 
 ## zipit.py
 

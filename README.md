@@ -11,15 +11,15 @@ included in the Python Standard Library -- particularly, of course, gzip.
 Example uses:
 
 ```
- $ ./zipit -v large.tar    # => Creates large.tar.gz at default level of parallelism.
-                           #    (-v verbosely informs of the piece-wise gzip tasks)
+ $ ./zipit.py -v large.tar    # => Creates large.tar.gz at default level of parallelism.
+                              #    (-v verbosely informs of the piece-wise gzip tasks)
 
- $ ./zipit -qm large.tar   # => creates large.tar.gz using all available CPU's
+ $ ./zipit.py -qm large.tar   # => creates large.tar.gz using all available CPU's
 
- $ some_command | ./zipit - > out.gz    # => gzips from the stdin stream, onto stdout
+ $ some_command | ./zipit.py - > out.gz   # => gzips from the stdin stream, onto stdout
 
- $ docker export cimg | ./zipit.py \    # => export and compress the filesystem of
-      -d cimg.dig - >cimg.tgz           #    a docker container
+ $ docker export cimg | ./zipit.py \      # => export and compress the filesystem of
+      -d cimg.dig - >cimg.tgz             #    a docker container
 ```
 
 ## testzip.py

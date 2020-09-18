@@ -41,15 +41,18 @@ dig = {}
 def usage():
   print('''
   Usage: {0} [-c level] [-{{k|v|h|q<N>|d<Filename>}} ...] {{-|file_to_compress}}
-  Options: -c      compression level (defaults to {cmprlvl})
-           -d fn   digest filename
-           -q N | 'm' set parallelism ( up to machines cpu count)
-                      ('m' specifies maximum, and the default is {Qmax})
-           -k      keep files around - for debug purposes only
-           -h      help '''.format(sys.argv[0],**globals()))
+  Options: -c        \t compression level (defaults to {cmprlvl})
+           -C chunk  \t chunksize (must be >1MB)
+           -d fn     \t digest filename
+           -q N | 'm'\t set parallelism ( up to machines cpu count)
+                     \t ('m' specifies maximum, and the default is {Qmax})
+           -k        \t keep files around - for debug purposes only
+           -h        \t help '''.format(sys.argv[0],**globals()))
   exit()
 
-opt,arg = getopt.getopt(sys.argv[1:],'c:hkvd:q:')
+opt,arg = getopt.getopt(sys.argv[1:],'c:hkvd:q:C:')
+
+suggested_chunk_size = 0
 
 for key,val in opt:
     if   key == '-c': cmprlvl = int(val)
@@ -58,6 +61,7 @@ for key,val in opt:
             Qmax = int(val)
         except ValueError:
             if val.lower()[:1] == 'm': Qmax = 99999999
+    elif key == '-C': suggested_chunk_size = int(float(val))
     elif key == '-h': usage()
     elif key == '-d': digest = val
     elif key == '-k': keep=True
@@ -85,8 +89,12 @@ class GZipper(multiprocessing.Process):
                 b=f.read(1024**2)
                 if b: g.write(b)
                 else: break
+M=1024**2
+chunk=200*M
+if suggested_chunk_size >= 1*M:
+    chunk=suggested_chunk_size
+    
 
-chunk=200*1024**2
 i = 0
 last = False
 
